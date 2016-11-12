@@ -1,7 +1,10 @@
 /*
+
 Program to converts digits into words (International System).
 (Supports upto 18 digits)
+
 Program by Paras Sharmaa
+
 */
 
 #include <iostream>
@@ -38,6 +41,7 @@ string d_words(long long n) {
 	string key_b[15]  = {"ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"};
 	string key_c[15]  = {"twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"};
 	string key_d[15]  = {"hundred", "thousand", "million", "billion", "trillion", "quadrillion"};
+  
 	while(n) {
 		if(p>0) {
 			r_stack.push(key_d[p]);
@@ -47,10 +51,6 @@ string d_words(long long n) {
 			r_stack.push(key_b[(n%100)-10]);
 			n/=100;
 			s+=2;
-		}
-		else if(n%10==0) {
-			n/=10;
-			s++;
 		}
 		else {
 			r_stack.push(key_a[n%10-1]);
@@ -62,15 +62,24 @@ string d_words(long long n) {
 			n/=10;
 			s++;
 		}
-		else if(s==1) {
+		else {
 			n/=10;
 			s++;
 		}
 		if(s==2 && n%10>0) {
-			r_stack.push(key_a[n%10-1]+" "+key_d[0]);
-			n/=10;
+			if(!p) {
+				r_stack.push(key_a[n%10-1]+" "+key_d[0]+" and");
+				n/=10;
+			}
+			else {
+				r_stack.push(key_a[n%10-1]+" "+key_d[0]);
+				n/=10;
+			}
 		}
 		else {
+			if(!p) {
+				r_stack.push("and");
+			}
 			n/=10;
 		}
 		p++;
@@ -93,11 +102,11 @@ string d_words(long long n) {
 //nine hundred ninety nine billion 
 //nine hundred ninety nine million 
 //nine hundred ninety nine thousand 
-//nine hundred ninety nine
+//nine hundred and ninety nine
 
 /*
 Sample Output:
 Enter number:1126
 Number of digits: 4
-In words: one thousand one hundred twenty six
+In words: one thousand one hundred and twenty six
 */
